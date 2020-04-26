@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest spec/e2e.spec.ts visual.spec.ts",
     "test:all": "jest",
-    "lint": "eslint '**/*.ts'"
+    "lint": "eslint '**/*.ts'",
+    "start": "webpack-dev-server --open --hot --watch-content-base"
   },
   "repository": {
     "type": "git",
@@ -45,10 +46,12 @@
     "vue-loader": "^15.7.0",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.32.2",
-    "webpack-cli": "^3.3.2"
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "jquery": "^3.3.1",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vuex": "^3.3.0"
   }
 }

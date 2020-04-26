@@ -17,43 +17,50 @@
 
 <script lang="ts">
 import Vue from "vue";
-import store, { mutations, Todo } from "./Store";
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapGetters, mapActions } = createNamespacedHelpers('todo');
+
 import TodoList from "./TodoList.vue";
 import TodoEmpty from "./TodoEmpty.vue";
 import NextTodo from "./NextTodo.vue";
 import TodoCount from "./TodoCount.vue";
 
+import { ADD_TODO, UPDATE_TODO, REMOVE_TODO } from "./mutation-types";
+
 export default Vue.extend({
   components: {
     TodoList, TodoEmpty, NextTodo, TodoCount
   },
-
   computed: {
-    todoList(): Todo[] {
-      return store.todoList;
-    },
+    ...mapState(['todoList']),
+    ...mapGetters(['count']),
     nextTodoText(): string {
-      return store.todoList.length > 0 ?
-              store.todoList[0].todo :
+      return this.$store.state.todo.todoList.length > 0 ?
+              this.$store.state.todo.todoList[0].todo :
               "(未登録)";
     },
-    count(): number {
-      return store.todoList.length;
-    },
-    visible(): boolean {
-      return this.count > 0;
+    visible(): any {
+        // "does not exist on type 'CombinedVueInstance" のエラー
+        // 解決法 https://qiita.com/shunjikonishi/items/3774486d37af80d1ae47
+        // @ts-ignore
+        return this.count > 0;
     }
   },
 
   methods: {
+    ...mapActions([ADD_TODO]),
     updateTodo(payload: { index: number, value: string }) {
-      mutations.updateTodo(payload.index, payload.value);
-    },
-    addTodo() {
-      mutations.addTodo();
+      this.$store.dispatch(`todo/${UPDATE_TODO}`,
+          {
+              index: payload.index,
+              value: payload.value
+          });
     },
     removeTodo(index: number) {
-      mutations.removeTodo(index);
+        this.$store.dispatch(`todo/${REMOVE_TODO}`,
+            {
+                index
+            });
     }
   }
 });

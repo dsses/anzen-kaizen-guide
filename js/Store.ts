@@ -1,27 +1,15 @@
 import Vue from "vue";
+/* eslint-disable no-unused-vars */
+import Vuex, { StoreOptions } from "vuex";
+import { RootState } from "./state-types";
+import { todo } from "./TodoStore";
 
-export type Todo = {
-  key: number;
-  todo: string;
-};
+Vue.use(Vuex);
 
-const store = Vue.observable({
-  todoList: [] as Todo[]
-});
-
-export const mutations = {
-  addTodo() {
-    store.todoList.push({
-      key: new Date().getTime(),
-      todo: ""
-    });
-  },
-  removeTodo(index: number) {
-    store.todoList.splice(index, 1);
-  },
-  updateTodo(index: number, value: string) {
-    store.todoList[index].todo = value;
+const store: StoreOptions<RootState> = {
+  modules: {
+    todo
   }
 };
 
-export default store as Readonly<typeof store>;
+export default new Vuex.Store<RootState>(store);

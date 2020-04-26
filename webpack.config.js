@@ -1,4 +1,5 @@
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const path = require("path");
 
 module.exports = {
   mode: "development",
@@ -27,6 +28,12 @@ module.exports = {
         use: [{ loader: "style-loader" }, { loader: "css-loader" }]
       }
     ]
+  },
+  output: {
+    publicPath: "/dist/"
+  },
+  devServer: {
+    contentBase: path.join(__dirname, ".")
   },
   plugins: [new VueLoaderPlugin()]
 };

@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-import { Todo } from "./Store";
+import { Todo } from "./state-types";
 
 export default Vue.extend({
   props: {
